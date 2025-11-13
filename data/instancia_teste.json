@@ -1,0 +1,20 @@
+{
+  "depot": { "id": 0, "x": 50, "y": 50 },
+  "customers": [
+    { "id": 1, "x": 40, "y": 60, "pickup": 10, "delivery": 5 },
+    { "id": 2, "x": 20, "y": 80, "pickup": 5, "delivery": 10 },
+    { "id": 3, "x": 70, "y": 70, "pickup": 8, "delivery": 20 },
+    { "id": 4, "x": 10, "y": 30, "pickup": 15, "delivery": 10 },
+    { "id": 5, "x": 90, "y": 40, "pickup": 12, "delivery": 8 },
+    { "id": 6, "x": 60, "y": 20, "pickup": 7, "delivery": 15 }
+  ],
+  "charging_stations": [
+    { "id": 101, "x": 30, "y": 50 },
+    { "id": 102, "x": 60, "y": 80 }
+  ],
+  "vehicle": {
+    "capacity": 50,
+    "battery": 200.0,
+    "consumption_rate": 1.0
+  }
+}
