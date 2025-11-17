@@ -51,8 +51,8 @@ if __name__ == "__main__":
     log.append({"method": "C&W", "cost": cw_cost, "time": cw_time, "routes": len(cw_solution)})
     print(f"Solução C&W: Custo {cw_cost:.2f}, Tempo {cw_time:.4f}s, Rotas {len(cw_solution)}")
 
-    # VNS pós-C&W com 5 execuções (para teste rápido)
-    N = 5
+    # VNS pós-C&W com 3 execuções (para teste rápido)
+    N = 3
     vns_cw_costs = []
     vns_cw_times = []
     histories = []
