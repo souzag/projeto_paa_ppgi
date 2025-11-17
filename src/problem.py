@@ -35,29 +35,44 @@ class Route:
 
     def check_feasibility(self, vehicle):
         try:
-            # Verificar capacidade e bateria
-            current_load = 0
+            # 1. Carga Inicial: Soma de todas as entregas na rota
+            current_load = sum(node.delivery for node in self.nodes if isinstance(node, Customer))
+            if current_load > vehicle.capacity:
+                return False  # Rota inviável desde o início
+
             current_battery = vehicle.battery
-            for i in range(len(self.nodes) - 1):
+            last_node = self.nodes[0]  # Começa no depósito
+
+            for i in range(1, len(self.nodes)):
                 node = self.nodes[i]
-                next_node = self.nodes[i + 1]
-                distance = self.calculate_distance(node, next_node)
-                # Atualizar carga se for Customer
+
+                # 2. Consumo de Bateria
+                distance = self.calculate_distance(last_node, node)
+                current_battery -= distance * vehicle.consumption_rate
+
+                if current_battery < 0:
+                    return False  # Sem bateria para chegar ao nó
+
+                # 3. Lógica no Nó
                 if isinstance(node, Customer):
+                    # 3a. Entrega Primeiro
+                    current_load -= node.delivery
+
+                    # 3b. Coleta Depois
                     current_load += node.pickup
+
+                    # 3c. Verifica Capacidade APÓS a coleta
                     if current_load > vehicle.capacity:
                         return False
-                    current_load -= node.delivery
-                    if current_load < 0:
-                        current_load = 0
-                # Consumir bateria
-                current_battery -= distance * vehicle.consumption_rate
-                if current_battery < 0:
-                    return False
-                # Se for ChargingStation, recarregar bateria
-                if isinstance(next_node, ChargingStation):
-                    current_battery = vehicle.battery  # Assumir recarga completa
+
+                elif isinstance(node, ChargingStation):
+                    # 3d. Recarrega
+                    current_battery = vehicle.battery
+
+                last_node = node
+
             return True
+
         except (TypeError, ValueError, AttributeError) as e:
             print(f"Erro em check_feasibility: {e}")
             return False

@@ -12,7 +12,7 @@ def test_performance():
     initial_routes_count = len(initial_routes)
 
     start = time.time()
-    final_solution = run_vns(initial_routes, k_max=3, max_iter=50, vehicle=vehicle)
+    final_solution, _ = run_vns(initial_routes, k_max=3, max_iter=50, vehicle=vehicle)
     vns_time = time.time() - start
     final_cost = calculate_total_cost(final_solution)
     final_routes_count = len(final_solution)
